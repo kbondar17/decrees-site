@@ -7,7 +7,7 @@ __pycache__/
 *.so
 
 #my stuff
-*.db
+#*.d
 
 # Distribution / packaging
 .Python
