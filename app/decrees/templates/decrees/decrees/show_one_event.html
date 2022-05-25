@@ -1,0 +1,55 @@
+{% extends 'decrees/decrees/decrees_base.html' %}
+
+{% block content %}
+
+<div class="col col-7">
+
+<h3>Событие</h3>
+<br>
+
+
+<div class="mb-3">
+    {{even.person}}
+</div>
+
+<div class="mb-3">
+    {{event.date}}
+</div>
+
+<div class="mb-3">
+    {{event.action}}
+</div>
+
+<div class="mb-3">
+    <h5>Должность</h5>
+    {{event.position}}
+</div>
+
+<div class="mb-3">
+  <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+
+      <p>
+        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Полный текст документа &#9660;
+        </a>
+      </p>
+
+      <div class="collapse" id="collapseExample">
+        {{event.full_text}}
+      </div>
+</div>
+
+
+
+
+</div>
+
+{% endblock   %}
+
+<!-- MDB -->
+<script
+type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"
+></script>
+
+

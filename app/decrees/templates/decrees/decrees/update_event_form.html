@@ -1,0 +1,106 @@
+{% extends 'decrees/decrees/new_decree_base.html' %}
+
+
+
+{% block card %}
+
+  
+  
+<div class="container" >
+  <div class="row">
+
+      <div class="col col-2">
+
+    <a  href="{% url 'decrees:show-all-events' %}">
+          
+          <div id='get_back_link'>
+              <div>Назад</div>
+
+          </div>
+
+        </a>
+
+    </div>
+
+  <div class="col col-7" id="card-wrapper">
+          <!-- <div class="col col-7"> -->
+            <h3>Событие</h3>
+            <br>
+            <h1></h1>
+            <form method="post">
+
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{form.person}}
+                </div>
+
+                <div class="mb-3">
+                    {{form.date}}
+                </div>
+
+                <div class="mb-3">
+                    
+                  {{form.action}}
+
+                </div>
+                
+                <div class="mb-3">
+                    <h5>Должность</h5>
+                    {{form.position}}
+                </div>
+               
+                <div class="mb-3">
+                  <p>
+                        <a class="btn btn-secondary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                          Полный текст документа &#9660;
+                        </a>
+
+                  </p>
+
+                      <div class="collapse" id="collapseExample">
+                        {{form.full_text}}
+                        <br>
+                          {% if download_link %}
+                          <!-- <a href="{{ download_link }}"> <button  class="btn btn-primary">Скачать </button> </a> -->
+                        {% endif %}
+
+                        <button id="download_link" class="btn btn-primary"><a id='download_link' href="{{ download_link }}">скачать</a></button>                                                
+
+                      </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Внести изменения </button>
+
+            </form>
+            <br>
+            <br>
+            <br>
+            
+          </div>
+
+          <div class="col col-2">222</div>
+
+        </div>
+
+        </div>
+
+
+{% endblock %}
+
+
+
+
+
+    
+    <!-- {{form.as_p}} -->
+ 
+      <!-- дейт пикер -->
+      <!-- <script>
+        $(function () {
+          $("#id_date").datepicker({
+            format:'dd/mm/yyyy',
+          });
+        });
+      </script> -->
+
+
