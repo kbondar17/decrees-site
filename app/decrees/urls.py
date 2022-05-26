@@ -20,10 +20,12 @@ urlpatterns = [
     path('event-form/update/<int:pk>', appointment_views.EditEvent.as_view(), name='update-event'),
     path('event-form/<int:pk>', appointment_views.ShowOneEvent.as_view(), name='show-event'),
 
-    path('event/', appointment_views.ShowAllEvents.as_view(), name='show-all-events'),
-    path('event/<str:query>', appointment_views.ShowAllEvents.as_view(), name='show-all-events'),
+    path('event-form/<int:pk>/delete', appointment_views.DeleteEvent.as_view(), name='delete-event'),
 
-    path('test/', appointment_views.test, name='test'),
+    path('events/', appointment_views.ShowAllEvents.as_view(), name='show-all-events'),
+    path('events/<str:query>', appointment_views.ShowAllEvents.as_view(), name='show-all-events'),
+
+
 
 ]
 

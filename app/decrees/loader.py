@@ -7,7 +7,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
 import django
 django.setup()
 
-from decrees.models import Document, Formats, MyUser
 from django.contrib.auth.models import User
 from decrees.models import Position, Person, Event
 
@@ -53,17 +52,24 @@ from decrees.models import Position, Person, Event
 # breakpoint()
 import dateparser
 import json
-fed_path = r"C:\Users\ironb\прогр\Declarator\appointment-decrees\downloads\regions\федеральное законодательство\results\федеральное законодательство_parsed.json"
+import tqdm
+
+fed_path = r"C:\Users\ironb\прогр\Declarator\appointment-decrees\downloads\regions\федеральный уровень\results\федеральный уровень_parsed.json"
+mos_path = r"C:\Users\ironb\прогр\Declarator\appointment-decrees\downloads\regions\Московская область\results\московская область_parsed.json"
 # belgorod = r"C:\Users\ironb\прогр\Declarator\appointment-decrees\downloads\regions\Белгородская область\resultsБелгородской области_parsed.json"
 # rostov = r"C:\Users\ironb\прогр\Declarator\appointment-decrees\downloads\regions\Ростовская область\resultsРостовская область_parsed.json"
 
+
 LEVEL = 'federal'
-REGION = 'Федеральный уровень'
+REGION = 'федеральный уровень'
+
+# LEVEL = 'regional'
+# REGION = 'Московская область'
 
 
-def populate_bd_with_parsing_results():
-    fed_data = json.load(open(fed_path, 'r'))['parsed_data']
-    for file in fed_data:
+def populate_bd_with_parsing_results(path):
+    fed_data = json.load(open(path, 'r'))['parsed_data']
+    for file in tqdm.tqdm(fed_data):
         try:
             date = file['date']
             date = dateparser.parse(date,locales=['fr-PF']) 
@@ -93,7 +99,9 @@ def populate_bd_with_parsing_results():
         except Exception as ex:
             print(file['file_name'], ex)
 
-populate_bd_with_parsing_results()
+
+
+populate_bd_with_parsing_results(fed_path)
 # fed_data = json.load(open(fed_path, 'r'))['parsed_data
 # for file in fed_data:
 #     try

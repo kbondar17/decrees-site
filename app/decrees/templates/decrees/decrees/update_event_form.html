@@ -1,21 +1,16 @@
-{% extends 'decrees/decrees/new_decree_base.html' %}
-
-
+{% extends 'decrees/decrees/base.html' %}
 
 {% block card %}
 
-  
-  
 <div class="container" >
   <div class="row">
 
       <div class="col col-2">
 
-    <a  href="{% url 'decrees:show-all-events' %}">
+    <a  href="{% url 'decrees:show-all-events' %}" id="get_back_link_text">
           
-          <div id='get_back_link'>
-              <div>Назад</div>
-
+          <div id='get_back_link_wrapper'>
+              <div class="get_back_button"> <h3>Назад</h3></div>
           </div>
 
         </a>
@@ -69,8 +64,9 @@
                       </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Внести изменения </button>
-
+                <button type="submit" class="btn btn-primary">Сохранить изменения </button>
+                <!-- <button id="delete_event_button" type="button" class="btn btn-light">Удалить событие</button> -->
+                  
             </form>
             <br>
             <br>
@@ -78,7 +74,7 @@
             
           </div>
 
-          <div class="col col-2">222</div>
+          <div class="col col-2"> </div>
 
         </div>
 

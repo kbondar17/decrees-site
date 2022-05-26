@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.forms import ModelForm
 from decrees.models import MyUser
 from django import forms
-from decrees.models import File
 
 from decrees.models import Event, Person, Position
 
@@ -30,15 +29,6 @@ class TestUserForm(ModelForm):
         model = MyUser
         fields = ('username','password', 'email')
 
-
-
-class UploadFileForm(forms.ModelForm):
-    # title = forms.CharField(max_length=50)
-    # file = forms.FileField()
- 
-    class Meta:
-        model = File
-        fields = ('description', 'document', )
 
 
 from django import forms

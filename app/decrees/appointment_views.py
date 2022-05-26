@@ -1,4 +1,4 @@
-
+from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.http import Http404
@@ -17,7 +17,7 @@ from typing import *
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.contrib.auth.forms import UserCreationForm
-from django.views.generic import FormView, ListView, DetailView
+from django.views.generic import FormView, ListView, DetailView, DeleteView
 from django.contrib.auth import login
 from decrees.models import Event, Person, Position
 from decrees.forms import EventForm, NewEventForm, NewEventForm_DisabledFields
@@ -126,7 +126,7 @@ class EditEvent(LoginRequiredMixin,UpdateView):
         return redirect('decrees:update-event', pk=event_id) 
 
 class ShowOneEvent(EditEvent):
-
+    # приходится это делать, чтобы выключить редактиторвание полей и просто показать форму
     def __init__(self, *args, **kwargs):
         print('args---', args, kwargs)
         super().__init__(model_form=NewEventForm_DisabledFields,*args, **kwargs)
@@ -145,6 +145,14 @@ class ShowOneEvent(EditEvent):
     
 
 # 
+# class MyPaginator(Paginator):
+
+#     def get_elided_page_range(self):
+#         age = request.GET.get('page', 1)
+#         paginator = Paginator(articles, 40)
+#         page_range = paginator.get_elided_page_range(number=page)
+
+
 class ShowAllEvents(LoginRequiredMixin, ListView):
     '''    ЛОГИРОВАНИЕ СЮДА НАПРАВЛЯЕТ ВСЕ ОК, НО ТУТ ПОЧЕМУ-ТО ЮЗЕР НЕ ЗАЛОГИНЕН
         вот эти два надо настроитьы
@@ -152,10 +160,11 @@ class ShowAllEvents(LoginRequiredMixin, ListView):
     login_url = 'decrees:login'
 
     model = Event
-    template_name = 'decrees/decrees/test_menu.html'
+    template_name = 'decrees/decrees/menu.html'
     fields = '__all__'
     context_object_name = 'events'
-    paginate_by = 5
+    paginate_by: int = 5
+
     
     def get_queryset(self):
         region_query = self.request.GET.get('region-search','')
@@ -173,7 +182,7 @@ class ShowAllEvents(LoginRequiredMixin, ListView):
                 person__name__contains=user_name_query)
 
         if region_query:
-            filtered_events = filtered_events.filter(region=region_query)
+            filtered_events = filtered_events.filter(region__iexact=region_query)
 
         if action_query:
             filtered_events = filtered_events.filter(action=action_query)
@@ -186,18 +195,20 @@ class ShowAllEvents(LoginRequiredMixin, ListView):
         if date_to:
             filtered_events = filtered_events.filter(date__lte=date_to)
         
-        if filtered_events:
+        if filtered_events: # нумеруем элементы
             for i, e in enumerate(filtered_events):
-                e.__setattr__('row_number',i+1)
+                e.__setattr__('row_number', i+1)
 
         return filtered_events 
 
 
     def get_context_data(self, **kwargs):
+
         # добавляет контекста, который можно юзать в темплейтах
         context = super().get_context_data(**kwargs)
-        regions = json.load(open('decrees/regions.json', 'r'))
-        regions += ['Федеральный уровень']
+        # regions = json.load(open('decrees/regions.json', 'r'))
+        regions = ['Московская область']
+        regions += ['федеральный уровень']
         context.update({'regions':regions})
 
         region_query = self.request.GET.get('region-search','')
@@ -206,6 +217,9 @@ class ShowAllEvents(LoginRequiredMixin, ListView):
         action_query = self.request.GET.get('action_option')
         date_from = self.request.GET.get('date_from')
         date_to = self.request.GET.get('date_to')
+        
+
+        # breakpoint()
 
         context.update({
             'region_query':region_query, 
@@ -214,11 +228,20 @@ class ShowAllEvents(LoginRequiredMixin, ListView):
             'date_from':date_from,
             'date_to':date_to,
 
+            # 'page_obj.paginator':paginator
+
         })
         return context
 
-def test(r):
-    return render(r, 'decrees/decrees/show_all_events_test.html')
+class DeleteEvent(DeleteView):
+    template_name = 'decrees/decrees/confirm_delete.html'
+    context_object_name = 'event'
+
+    def get_queryset(self, *args, **kwargs):
+        pk = self.kwargs['pk']
+        ev = Event.objects.filter(pk=pk)
+        return ev
+
 
 
     # def __get_context_data(self, **kwargs):

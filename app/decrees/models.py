@@ -10,18 +10,6 @@ from datetime import datetime
 import datetime
 # Create your models here.
 
-class Formats(models.Model):
-    formatname = models.CharField(max_length=199, unique=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['formatname'], name="unique_formatname"
-            )
-        ]
-    def __str__(self):
-        return f'Формат : {self.formatname}'
-
 
 class MyUser(AbstractUser):
     """
@@ -44,45 +32,6 @@ class MyUser(AbstractUser):
         return f'{self.get_username()} is located at {self.location_2}'
     
 
-class Document(models.Model):
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['user', 'doc_name'], name="unique_user_docname"
-            ),
-            models.CheckConstraint(check=models.Q(size__lte=95), name='my_size_limit')
-        ]
-    
-    default_date = datetime.date.today()
-    doc_format = models.ForeignKey(
-        Formats, on_delete=models.SET('not_supported_extension'))
-    doc_name = models.CharField(max_length=150)
-    size = models.IntegerField()
-    upload_date = models.DateField(default=default_date)
-    lastmodif = models.DateField(null=True,
-                                 auto_now=True, blank=True, editable=True, help_text='Последнее изменение (изменяется на obj.save())')
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, default=1)  
-
-    def __str__(self) -> str:
-        return self.doc_name
-
-
-class Subscription(models.Model):
-    name =  models.CharField(max_length=151)
-    user = models.ManyToManyField(MyUser)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-# чет не валидирует форму почему-то
-
-class File(models.Model):
-    description = models.CharField(max_length=255, blank=True)
-    document = models.FileField()
-    # uploaded_at = models.DateTimeField(auto_now_add=True)
-
 
 class Position(models.Model):
     name = models.CharField(max_length=800)    
@@ -102,8 +51,14 @@ class Person(models.Model):
         return self.name
 
 
-
 class Event(models.Model): 
+    
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(fields=['person','region','position', 'date'], name='unique_event'),
+            
+        ]
 
     person = models.ForeignKey(Person, on_delete=models.RESTRICT)
     event_choices = [('appoint', 'appoint'),
@@ -127,5 +82,15 @@ class Event(models.Model):
     def __str__(self) -> str:
         return f'{self.action} {self.position} on {self.date}'
 
- 
 
+
+
+
+
+'''        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'doc_name'], name="unique_user_docname"
+            ),
+            models.CheckConstraint(check=models.Q(size__lte=95), name='my_size_limit')
+        ]
+'''    

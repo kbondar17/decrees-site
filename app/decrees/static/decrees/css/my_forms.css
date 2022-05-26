@@ -109,15 +109,38 @@
 
 }
 
-#get_back_link{
+#get_back_link_wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content:center;
+    align-items: center;
     height: 100%;
     width: 220%;
-    /* padding-left: -400px; */
     margin-left: -200px;
+
+}
+#get_back_link_text:hover{
+    text-decoration: none;
 }
 
-#get_back_link{    
-    border: 2px solid #c9cdd1cc;    
+#get_back_link_wrapper:hover{    
+    /* border: 2px solid #c9cdd1cc;     */
+    border-radius: 3%;
+    background-color: #E6EDFF;
+    text-decoration: none;
+}
+
+.get_back_button{
+    padding-bottom: 10%;
+    opacity: 35%;
+    text-decoration: none;
+}
+
+
+#delete_event_button{
+    color: red;
+    
 }
 
 .ts-dropdown, .ts-control, .ts-control input {
@@ -137,4 +160,10 @@
 
 #download_link:hover{
     text-decoration: none;
+}
+
+[data-bold="1"] {    
+
+    
+    background-color: red; 
 }
