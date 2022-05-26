@@ -6,7 +6,6 @@
 
 
 {% load my_tags %}
-
 <div class="table_wrapper">
   
   <table class="table table-sm">
@@ -42,7 +41,7 @@
         <td>{{event.region}}</td>
         <td>{{event.date}}</td>
         <td>
-            <div>
+            <div> 
             <a href="{% url 'decrees:update-event' event.pk  %}">Править</a>
         </div>
         <div>

@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LogoutView
@@ -17,9 +17,11 @@ urlpatterns = [
     path('event-form/', appointment_views.EventView.as_view(), name='event-form'),
     path('event-form/create', appointment_views.AddEvent.as_view(), name='create-event'),
     
-    path('event-form/update/<int:pk>', appointment_views.EditEvent.as_view(), name='update-event'),
     path('event-form/<int:pk>', appointment_views.ShowOneEvent.as_view(), name='show-event'),
-
+    
+    # path('event-form/update/<int:pk>', appointment_views.EditEvent.as_view(), name='update-event'),
+    re_path(r'^event-form/update/(?P<pk>[0-9]{1,999})/*', appointment_views.EditEvent.as_view(), name='update-event'),
+    
     path('event-form/<int:pk>/delete', appointment_views.DeleteEvent.as_view(), name='delete-event'),
 
     path('events/', appointment_views.ShowAllEvents.as_view(), name='show-all-events'),
