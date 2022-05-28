@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    python:
+        image: python:3.10
+        volumes:
+            - ./app:/app
+        ports:
+            - 8888:8888
+        command: bash -c "cd app && pip install -r requirements.txt && python manage.py migrate && python manage.py runserver 0.0.0.0:8888"
+  

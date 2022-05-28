@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-n_j0k61#1jqts3pg)1(gy##p$j_*s0mb#!9#^dcz^+(y9(jmpv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']  
+ALLOWED_HOSTS = ['localhost']  
 
 # Application definition
 
@@ -167,3 +167,26 @@ print('!static----',   os.path.join(BASE_DIR, 'app',"static"))
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'decrees:login'
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': 'debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+# import logging
+# log = logging.getLogger('django')
+# log.warning('AAAAA WE ARE IN SETTING!')
