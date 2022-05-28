@@ -50,6 +50,7 @@ AUTH_USER_MODEL = 'decrees.MyUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,7 +136,10 @@ USE_TZ = True
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -146,11 +150,14 @@ STATICFILES_FINDERS = (
 
 if DEBUG:
     STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static")
-    ]
-
+        os.path.join(BASE_DIR, "static"),
+        'static'
+    ],
+    STATIC_ROOT = os.path.join(BASE_DIR,'static')
+    
 else:
-    STATIC_ROOT = 'static'
+    STATIC_ROOT = os.path.join(BASE_DIR,'static')
+    print('STATIC_ROOT---',STATIC_ROOT)
 
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
@@ -159,7 +166,7 @@ else:
 #     # здесь то что не связано с конкретными приложениями
 # ]
 # './converter/static/converter/',
-print('!static----',   os.path.join(BASE_DIR, 'app',"static"))
+# print('!static----',   os.path.join(BASE_DIR, 'app',"static"))
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

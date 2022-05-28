@@ -8,7 +8,8 @@ __pycache__/
 
 #my stuff
 #*.d
-
+/bin
+/linux_env
 # Distribution / packaging
 .Python
 build/
