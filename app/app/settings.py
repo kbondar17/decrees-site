@@ -153,7 +153,7 @@ if DEBUG:
         os.path.join(BASE_DIR, "static"),
         'static'
     ],
-    STATIC_ROOT = os.path.join(BASE_DIR,'static')
+    STATIC_ROOT = os.path.join(BASE_DIR,'my_collected_static')
     
 else:
     STATIC_ROOT = os.path.join(BASE_DIR,'static')
