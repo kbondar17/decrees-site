@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n_j0k61#1jqts3pg)1(gy##p$j_*s0mb#!9#^dcz^+(y9(jmpv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']  
 
@@ -133,31 +133,47 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-STATIC_URL = '/static/'
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-# print('cwd---', os.listdir('./converter/static/converter/'))
+# ---- было вот так ----
 
-if DEBUG:
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static"),
-        'static'
-    ],
-    STATIC_ROOT = os.path.join(BASE_DIR,'my_collected_static')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+# STATIC_URL = '/static/'
+
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# # print('cwd---', os.listdir('./converter/static/converter/'))
+
+# if DEBUG:
+#     STATICFILES_DIRS = [
+#         os.path.join(BASE_DIR, "static"),
+#         'static'
+#     ],
+#     STATIC_ROOT = os.path.join(BASE_DIR,'my_collected_static')
     
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR,'static')
-    print('STATIC_ROOT---',STATIC_ROOT)
+# else:
+#     STATIC_ROOT = os.path.join(BASE_DIR,'static')
+#     print('STATIC_ROOT---',STATIC_ROOT)
+
+# ---------
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
 
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
@@ -174,3 +190,6 @@ else:
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'decrees:login'
+
+import django_heroku
+django_heroku.settings(locals())
