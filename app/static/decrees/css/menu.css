@@ -238,17 +238,3 @@ li {
     /* border: 3px dashed pink; */
 
 }
-
-
-
-#menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-}
-
-.nav-item {
-    /* border: 3px dashed pink; */
-    padding: 0px 30px 0px 30px;
-}
