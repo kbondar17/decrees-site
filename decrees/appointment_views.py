@@ -175,8 +175,9 @@ class ShowAllEvents(LoginRequiredMixin, ListView):
         date_from = self.request.GET.get('date_from')
         date_to = self.request.GET.get('date_to')
 
-        filtered_events = Event.objects.all()
-        # breakpoint()
+        filtered_events = Event.objects.select_related('person', 'position').all()
+        # filtered_events = Event.objects.all()
+        
         if user_name_query:
             filtered_events = filtered_events.filter(
                 person__name__contains=user_name_query)
