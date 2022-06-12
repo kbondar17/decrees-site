@@ -1,0 +1,8 @@
+<h1>Create a doc!</h1>
+
+<a href="{% url 'converter:show_all_docs' %}">go back</a>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" name="" id="">
+</form>

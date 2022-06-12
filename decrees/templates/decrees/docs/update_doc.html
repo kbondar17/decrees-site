@@ -1,0 +1,20 @@
+{% extends 'converter/base.html'%}
+{% load static %}
+
+
+{% block content %}
+
+<h1>Update doc </h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <input type="button" value="update!">
+
+</form>
+
+
+
+{% endblock %}
